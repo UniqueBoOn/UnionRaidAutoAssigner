@@ -1,0 +1,113 @@
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+#include "csvdecoder.hpp"
+
+#include "trace.hpp"
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+CSVDecoder::CSVDecoder(string csvData)
+    : m_data(csvData)
+    , m_line("")
+    , m_lineEmpty(true)
+    , m_delimeter(';')
+{
+    LOG_I << "CSVDecoder()";
+
+    //nextLine();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+string CSVDecoder::fetchString()
+{
+    ASSERT(!m_lineEmpty);
+
+    string s = "";
+#if 0
+    auto pos = m_line.find(m_delimeter);
+    if (pos != string::npos)
+    {
+        s = m_line.substr(0, pos);
+        m_line.erase(0, pos + 1);
+    }
+#else
+    getline(m_line, s, m_delimeter);
+    m_lineEmpty = m_line.eof();
+#endif
+    return s;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+int CSVDecoder::fetchInt()
+{
+    string s = fetchString();
+    return base_toInt(s);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+long long int CSVDecoder::fetchLong()
+{
+    string s = fetchString();
+    return base_toLong(s);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+double CSVDecoder::fetchDouble()
+{
+    string s = fetchString();
+    return base_toDouble(s);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+void CSVDecoder::fetchNone()
+{
+    fetchString();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CSVDecoder::isLineEmpty()
+{
+    return m_lineEmpty;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CSVDecoder::nextLine()
+{ 
+    LOG_I << "nextLine()";
+
+    ASSERT(m_lineEmpty);
+
+    string s = "";
+    bool has = !getline(m_data, s).eof();
+    //ASSERT(has);
+
+    //m_line.str(s); // That is not working lol....
+    m_line = istringstream(s);
+    m_lineEmpty = false;
+
+    return has;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+bool CSVDecoder::skipLine()
+{
+    LOG_I << "skipLine()";
+
+    ASSERT(m_lineEmpty);
+
+    string s = "";
+    bool had = !getline(m_data, s).eof();
+    //ASSERT(has);
+
+    return had;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
