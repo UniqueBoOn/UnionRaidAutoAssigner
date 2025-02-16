@@ -7,6 +7,8 @@
 
 #include "base.hpp"
 
+#include "iassign.hpp"
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 class Bosses;
@@ -21,10 +23,9 @@ class IAssign;
 class Assigner
 {
 public:
-    static Assigner& instance();
+    Assigner();
 
     void init();
-    void initAssignNaive();
 
     void assign();
 
@@ -40,7 +41,8 @@ private:
 
     unique_ptr<IAssign> m_assigner;
 
-    Assigner();
+    void initAssignNaive(); // Move that to a builder/factory class
+
     void fillTeamElementLists(Member& member);
 };
 

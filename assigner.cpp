@@ -15,16 +15,6 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-// static
-Assigner& Assigner::instance()
-{
-    static Assigner assigner;
-
-    return assigner;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////
-
 Assigner::Assigner()
     : m_bosses(Global::instance().getBosses().m_bosses)
     , m_teams(Global::instance().getTeams().m_teams)
@@ -51,13 +41,15 @@ void Assigner::init()
             team.elmentListPtr = &m_teamsElements[team.element];
         }
     }
+
+    initAssignNaive();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 void Assigner::initAssignNaive()
 {
-    FNC2 << "initNaive()";
+    FNC2 << "initAssignNaive()";
 
     ASSERT(m_assigner == nullptr);
     m_assigner = make_unique<AssignNaive>(m_bosses, m_teamsElements);

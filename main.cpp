@@ -25,7 +25,7 @@ string loadCSV(string path)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-void init()
+void initGlobal()
 {
     FNC2 << "Load and init teams, members, dmg and bosses";
 
@@ -37,9 +37,6 @@ void init()
 
     auto membersData = loadCSV("csv/aa_teams.csv"); // aa_teams.csv contains also member dmg
     Global::instance().initMembers(membersData);
-
-    // Final touches, mostly cross referencing stuff for quicker access
-    Assigner::instance().init();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -51,10 +48,11 @@ int main()
     freopen_s(&tracefile, "report.trc", "w", stdout);
     freopen_s(&tracefile, "report.trc", "w", stderr);
 #endif
-    init();
-#if 1
-    Assigner& assigner = Assigner::instance();
-    assigner.initAssignNaive();
+
+    initGlobal();
+
+    Assigner assigner;
+    assigner.init();
 
     // Currently just a single pass
     //do
@@ -82,7 +80,6 @@ int main()
         LOG_I << "Writeback took " << base_toString(elapsed.count()) << "ms";
     }
     //while (true); // TODO define some goal like amount of iterations or time
-#endif
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
