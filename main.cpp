@@ -1,13 +1,12 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "assigner.hpp"
+#include <chrono>
 
 #include "global.hpp"
+#include "trace.hpp"
 #include "base.hpp"
 
-#include "trace.hpp"
-
-#include <chrono>
+#include "assigner.hpp"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -39,7 +38,8 @@ void init()
     auto membersData = loadCSV("csv/aa_teams.csv"); // aa_teams.csv contains also member dmg
     Global::instance().initMembers(membersData);
 
-    Assigner::instance().init(); // Final touches, mostly cross referencing stuff for quicker access
+    // Final touches, mostly cross referencing stuff for quicker access
+    Assigner::instance().init();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -54,7 +54,7 @@ int main()
     init();
 #if 1
     Assigner& assigner = Assigner::instance();
-
+    assigner.initAssignNaive();
 
     // Currently just a single pass
     //do

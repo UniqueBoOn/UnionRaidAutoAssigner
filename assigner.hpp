@@ -14,6 +14,8 @@ class Teams;
 //class Team;
 class Members;
 
+class IAssign;
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 class Assigner
@@ -22,29 +24,23 @@ public:
     static Assigner& instance();
 
     void init();
+    void initAssignNaive();
 
     void assign();
 
     void writeback();
 
 private:
-    vector<Boss>&  m_bosses;
+    vector<Boss>&   m_bosses;
     vector<Team>&   m_teams;
     vector<Member>& m_members;
 
     // Contains cleaner
-#if 0
-    list<Team*> m_teamsElectric;
-    list<Team*> m_teamsFire;
-    list<Team*> m_teamsIron;
-    list<Team*> m_teamsWater;
-    list<Team*> m_teamsWind;
-    list<Team*> m_teamsNeutral;
-#endif
     vector<list<Team*>> m_teamsElements;
 
+    unique_ptr<IAssign> m_assigner;
+
     Assigner();
-    void removeConflictingTeams(Team& team);
     void fillTeamElementLists(Member& member);
 };
 

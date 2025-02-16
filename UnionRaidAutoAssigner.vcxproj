@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="assigner.cpp" />
+    <ClCompile Include="assignnaive.cpp" />
     <ClCompile Include="base.cpp" />
     <ClCompile Include="bosses.cpp" />
     <ClCompile Include="csvdecoder.cpp" />
@@ -154,11 +155,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="assigner.hpp" />
+    <ClInclude Include="assignnaive.hpp" />
     <ClInclude Include="base.hpp" />
     <ClInclude Include="bosses.hpp" />
     <ClInclude Include="csvdecoder.hpp" />
     <ClInclude Include="csvencoder.hpp" />
     <ClInclude Include="global.hpp" />
+    <ClInclude Include="iassign.hpp" />
     <ClInclude Include="members.hpp" />
     <ClInclude Include="teams.hpp" />
     <ClInclude Include="trace.hpp" />

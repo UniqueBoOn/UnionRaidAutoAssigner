@@ -42,6 +42,9 @@
     <ClCompile Include="csvencoder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="assignnaive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="csvdecoder.hpp">
@@ -69,6 +72,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="csvencoder.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="assignnaive.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="iassign.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
