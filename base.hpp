@@ -283,7 +283,7 @@ struct Team
 {
     string name;
     Element element;
-    string conflictUnit; // Currently just one conflict unit supported
+    vector<string> conflictUnits;
     long long int dmg;
 
     Member* memberPtr;

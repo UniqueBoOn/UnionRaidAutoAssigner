@@ -88,7 +88,7 @@ Members::Members(string csvData)
                     stringstream ss;
                     ss << team.name << "_" << elementToString(team.element) << " conflicts with team: ";
                     ss << conflictingTeam->name << "_" << elementToString(conflictingTeam->element);
-                    if (team.conflictUnit != "no") ss << " conflict unit " << team.conflictUnit;
+                    for (auto s : team.conflictUnits) ss << " conflict unit " << s;
                     LOG_I << ss.str();
                 }
             }
@@ -106,11 +106,10 @@ void Members::fillConflictList(Team& currentTeam, vector<Team>& teams)
     {
         if (&currentTeam != &team) // Only for different teams in the list
         {
-            bool hasConflictingUnit = currentTeam.conflictUnit != "no";
+            bool hasConflictingUnit = !currentTeam.conflictUnits.empty();
             bool isCleaner = currentTeam.name == "Cleaner"; // Will never conflict
 
-            if (!isCleaner
-                && currentTeam.name == team.name) // Neutral teams are conflicting
+            if (!isCleaner && currentTeam.name == team.name) // Neutral teams are conflicting
             {
                 // Only one allowed to have neutral element
                 ASSERT(team.element == eElement_Neutral ^ currentTeam.element == eElement_Neutral);
@@ -118,13 +117,41 @@ void Members::fillConflictList(Team& currentTeam, vector<Team>& teams)
                 currentTeam.conflictPtrs.push_back(&team);
             }
             else if (hasConflictingUnit && !isCleaner
-                     && currentTeam.conflictUnit == team.conflictUnit) // Units are conflicting
+                     && hasTeamConflicts(currentTeam, team)) // Units are conflicting
             {
                 currentTeam.conflictPtrs.push_back(&team);
             }
             // else // No conflict
         }
     }
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+bool Members::hasTeamConflicts(Team& currentTeam, Team& team)
+{
+    FNC2 << "hasTeamConflicts()";
+
+    bool hasConflict = false;
+
+    bool stop = false;
+    for (auto currentUnit : currentTeam.conflictUnits)
+    {
+        for (auto teamUnit : team.conflictUnits)
+        {
+            if (currentUnit == teamUnit)
+            {
+                hasConflict = true;
+                stop = true;
+            }
+
+            if (stop) break;
+        }
+
+        if (stop) break;
+    }
+
+    return hasConflict;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

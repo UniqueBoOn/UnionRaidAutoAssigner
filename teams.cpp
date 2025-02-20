@@ -74,7 +74,11 @@ Teams::Teams(string csvData)
         Team team;
         team.name         = teamNames[i];
         team.element      = teamElements[i];
-        team.conflictUnit = teamConflict[i];
+
+        // Store conflicting units into vactor
+        stringstream ss(teamConflict[i]);
+        string s("");
+        while (getline(ss, s, ',')) team.conflictUnits.push_back(s);
 
         // Filled in Member class
         team.dmg        = -42;
@@ -83,8 +87,6 @@ Teams::Teams(string csvData)
 
         m_teams.push_back(team);
     }
-
-    // decoder bla bla
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////

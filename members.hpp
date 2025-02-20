@@ -25,6 +25,7 @@ private:
     vector<Member> m_members;
 
     void fillConflictList(Team& team, vector<Team>& teams);
+    bool hasTeamConflicts(Team& currentTeam, Team& team);
 
     friend class Assigner;
 };
